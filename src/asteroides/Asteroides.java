@@ -22,6 +22,10 @@ import javafx.stage.Stage;
  * @author isaac
  */
 public class Asteroides extends Application {
+
+int x = 400;
+int y = 350;
+int angle;
 int propul;
 final int SCENE_TAM_X= 800;
 final int SCENE_TAM_Y= 600; 
@@ -38,13 +42,13 @@ int rotacion=360; //usaremos esta variable para asignar el giro
         
         Polygon nave = new Polygon();
         nave.getPoints().addAll(new Double[]{
-            0.0, -20.0,
+            0.0, -40.0,
             -20.0, 20.0,
             20.0, 20.0 });
         nave.setFill(Color.YELLOW);
         nave.getTransforms().add(new Rotate(rotacion,0,00));
-        nave.setTranslateX(400);
-        nave.setTranslateY(350);
+        nave.setLayoutX(x);
+        nave.setLayoutY(y);
        /* nave.getTransforms().add(new Rotate(30, 50, 30));*/
         primaryStage.setTitle("Nave Espacial");
         primaryStage.setScene(scene);
@@ -53,24 +57,45 @@ int rotacion=360; //usaremos esta variable para asignar el giro
         //AnimationTimer movimiento;
        // movimiento = new AnimationTimer(){ 
             scene.setOnKeyPressed((KeyEvent event) -> {
-               nave.getTransforms().add(new Rotate(rotacion,0,00)); 
-            
+               //nave.getTransforms().add(new Rotate(rotacion,0,00)); 
+                
                    switch(event.getCode()){
                    case RIGHT:
                        //Pulsada tecla DERECHA
-                       rotacion = -90;
+                       angle = angle+90;
                        break;
                    case LEFT:
                        //Pulsada tecla IZQUIERDA
-                       rotacion = +90;
+                       angle = angle-90;
                        break;
                        
                    case UP:
                        //Pulsada tecla ARRIBA
-                       propul = +10;
-                        ;
+                       if (angle>360 && angle<0) {
+                        angle == 0
+                       }
+                        if (angle ==00){
+                           y--;
+                        nave.setLayoutY(y); 
+                        }
+                        if (angle ==90){
+                           x++;
+                        nave.setLayoutX(x); 
+                        }
+                        if (angle ==180){
+                           y++;
+                        nave.setLayoutY(y); 
+                        }
+                        if (angle ==270){
+                           x--;
+                        nave.setLayoutX(x); 
+                        }
                        break;
+                       
                     }
+                     
+                nave.setRotate(angle);
+                System.out.println(angle);
             });
 
         
