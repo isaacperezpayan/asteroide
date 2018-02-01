@@ -22,13 +22,15 @@ import javafx.stage.Stage;
  * @author isaac
  */
 public class Asteroides extends Application {
-short velocidad = 5;
+short velocidadx = 0;
+short velocidady = 0;
+int angle;
 
 int x = 400;
 int y = 350;
-int vx = x + velocidad;
-int vy = y + velocidad;
-int angle;
+
+int direccionx;
+int direcciony;
 int propul;
 final int SCENE_TAM_X= 800;
 final int SCENE_TAM_Y= 600; 
@@ -63,8 +65,26 @@ int rotacion=360; //usaremos esta variable para asignar el giro
             
            @Override
             public void handle(long now) {
-            
-            scene.setOnKeyPressed((KeyEvent event) -> {
+           x += direccionx*velocidadx;
+           nave.setLayoutX(x);
+           y += direcciony*velocidady;
+           nave.setLayoutY(y);
+           
+           if (x<0){
+             x = SCENE_TAM_X;  
+           }
+           if (x>SCENE_TAM_X){
+             x = 0;  
+           }
+           if (y<0){
+             y = SCENE_TAM_Y;  
+           }
+           if (y>SCENE_TAM_Y){
+             y = 0;  
+           }    
+          }
+        };
+        scene.setOnKeyPressed((KeyEvent event) -> {
                //nave.getTransforms().add(new Rotate(rotacion,0,00)); 
                 
                    switch(event.getCode()){
@@ -81,12 +101,16 @@ int rotacion=360; //usaremos esta variable para asignar el giro
                        angle = angle-90;
                        if (angle == -90){
                            angle = 270;
-                           x--;
-                        nave.setLayoutX(x); 
+                           
+                        nave.setLayoutY(y); 
                         }
                        break;
                        
-                
+                   case V:
+                    if (angle ==270 && angle ==90)
+                       
+                           velocidadx += 10;
+                       
                    
                    case UP:
                        //Pulsada tecla ARRIBA
@@ -100,35 +124,45 @@ int rotacion=360; //usaremos esta variable para asignar el giro
                         nave.setLayoutX(x); 
                         }*/
                     
-                        if (angle ==00){
-                           y-=velocidad; 
-                        nave.setLayoutY(y); 
+                        if (angle ==00 && angle<89){
+                           direccionx=0;
+                           direcciony=-1;
+                           velocidady=3;
+                           velocidadx=0;
                         }
                         
-                        if (angle ==90){
-                           x+=velocidad;
-                        nave.setLayoutX(x); 
+                        if (angle ==90 && angle<179){
+                           direccionx=+1;
+                           direcciony=0;
+                           velocidady=0;
+                           velocidadx=3;
+                         
                         }
-                        if (angle ==180){
-                           y+=velocidad;
-                        nave.setLayoutY(y); 
+                        if (angle ==180 && angle<269){
+                           direccionx=0;
+                           direcciony=+1;
+                           velocidady=3;
+                           velocidadx=0;
+                         
                         }
-                        if (angle ==270){
-                           x-=velocidad;
-                        nave.setLayoutX(x); 
+                        if (angle ==270 && angle<359){
+                           direccionx=-1;
+                           direcciony=0;
+                           velocidady=0;
+                           velocidadx=3;
+                        ; 
                         }
                        break;
                        
                     }  
-                scene.setOnKeyReleased((KeyEvent event) -> {
-                    
-                });
                 nave.setRotate(angle);
-                System.out.println(angle);
+                
             });
-                      
-          }
-        }; //at
+            scene.setOnKeyReleased((KeyEvent event) -> {
+                  
+                }); 
+        
+        System.out.println(angle);//at
       movimiento.start();
     }
         
