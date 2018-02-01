@@ -22,13 +22,13 @@ import javafx.stage.Stage;
  * @author isaac
  */
 public class Asteroides extends Application {
-short velocidadx = 0;
-short velocidady = 0;
+short velocidadx ;
+short velocidady ;
 int angle;
 
 int x = 400;
 int y = 350;
-
+int cose = x /angle;
 int direccionx;
 int direcciony;
 int propul;
@@ -90,7 +90,7 @@ int rotacion=360; //usaremos esta variable para asignar el giro
                    switch(event.getCode()){
                    case RIGHT:
                        //Pulsada tecla DERECHA
-                       angle = angle+90;
+                       angle = angle+10;
                        if (angle>=360) {
                         angle = 0;
                         nave.setLayoutY(y);
@@ -98,20 +98,14 @@ int rotacion=360; //usaremos esta variable para asignar el giro
                        break;
                    case LEFT:
                        //Pulsada tecla IZQUIERDA
-                       angle = angle-90;
+                       angle = angle-10;
                        if (angle == -90){
                            angle = 270;
                            
                         nave.setLayoutY(y); 
                         }
                        break;
-                       
-                   case V:
-                    if (angle ==270 && angle ==90)
-                       
-                           velocidadx += 10;
-                       
-                   
+                                         
                    case UP:
                        //Pulsada tecla ARRIBA
                        /*if (angle>=360) {
