@@ -26,9 +26,9 @@ short velocidadx ;
 short velocidady ;
 int angle;
 
-int x = 400;
-int y = 350;
-int cose = x /angle;
+float x = 400;
+float y = 350;
+//int cose = x /angle;
 int direccionx;
 int direcciony;
 int propul;
@@ -65,10 +65,14 @@ int rotacion=360; //usaremos esta variable para asignar el giro
             
            @Override
             public void handle(long now) {
+          
            x += direccionx*velocidadx;
+           
            nave.setLayoutX(x);
            y += direcciony*velocidady;
            nave.setLayoutY(y);
+           
+            
            
            if (x<0){
              x = SCENE_TAM_X;  
