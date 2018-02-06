@@ -5,6 +5,7 @@
  */
 package asteroides;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -13,6 +14,7 @@ import javafx.scene.shape.Polygon;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
@@ -22,19 +24,22 @@ import javafx.stage.Stage;
  * @author isaac
  */
 public class Asteroides extends Application {
-short velocidadx ;
-short velocidady ;
-int angle;
-
-float x = 400;
-float y = 350;
+double velocidadx;
+double velocidady;
+double angle;
+double velocidadab =3;
+double x = 400;
+double y = 350;
+double angulo;
 //int cose = x /angle;
-int direccionx;
-int direcciony;
+double velocidadmisil;
+double direccionx;
+double direcciony;
 int propul;
 final int SCENE_TAM_X= 800;
 final int SCENE_TAM_Y= 600; 
-int rotacion=360; //usaremos esta variable para asignar el giro
+int rotacion=90; //usaremos esta variable para asignar el giro
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -52,28 +57,36 @@ int rotacion=360; //usaremos esta variable para asignar el giro
             20.0, 20.0 });
         nave.setFill(Color.YELLOW);
         nave.getTransforms().add(new Rotate(rotacion,0,00));
+        ArrayList misil = new ArrayList();
+        
         nave.setLayoutX(x);
         nave.setLayoutY(y);
        /* nave.getTransforms().add(new Rotate(30, 50, 30));*/
         primaryStage.setTitle("Nave Espacial");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+        /*root.getChildren().add(misil);*/
         root.getChildren().add(nave);
+        
         //AnimationTimer movimiento;
         movimiento = new AnimationTimer(){ 
             
            @Override
             public void handle(long now) {
           
-           x += direccionx*velocidadx;
+           x += velocidadx;
            
            nave.setLayoutX(x);
-           y += direcciony*velocidady;
+           
+           y +=velocidady;
            nave.setLayoutY(y);
+          
            
+           angulo = Math.toRadians(angle) ;
+           velocidadx=Math.cos(angulo) * velocidadab;
+           velocidady=Math.sin(angulo) * velocidadab;
             
-           
+           //traspaso de la nave por los bordes
            if (x<0){
              x = SCENE_TAM_X;  
            }
@@ -97,7 +110,8 @@ int rotacion=360; //usaremos esta variable para asignar el giro
                        angle = angle+10;
                        if (angle>=360) {
                         angle = 0;
-                        nave.setLayoutY(y);
+                        velocidadab -= 2; 
+                        nave.setLayoutX(x);
                         }
                        break;
                    case LEFT:
@@ -105,8 +119,8 @@ int rotacion=360; //usaremos esta variable para asignar el giro
                        angle = angle-10;
                        if (angle == -90){
                            angle = 270;
-                           
-                        nave.setLayoutY(y); 
+                        velocidadab -= 2;   
+                        nave.setLayoutX(x); 
                         }
                        break;
                                          
@@ -122,36 +136,21 @@ int rotacion=360; //usaremos esta variable para asignar el giro
                         nave.setLayoutX(x); 
                         }*/
                     
-                        if (angle ==00 && angle<89){
-                           direccionx=0;
-                           direcciony=-1;
-                           velocidady=3;
-                           velocidadx=0;
-                        }
+                           
+                           
+                           velocidadab +=3;
                         
-                        if (angle ==90 && angle<179){
-                           direccionx=+1;
-                           direcciony=0;
-                           velocidady=0;
-                           velocidadx=3;
-                         
-                        }
-                        if (angle ==180 && angle<269){
-                           direccionx=0;
-                           direcciony=+1;
-                           velocidady=3;
-                           velocidadx=0;
-                         
-                        }
-                        if (angle ==270 && angle<359){
-                           direccionx=-1;
-                           direcciony=0;
-                           velocidady=0;
-                           velocidadx=3;
-                        ; 
-                        }
+                   
+                        
                        break;
                        
+                   case DOWN:
+                       velocidadab -=3;
+                       break;
+                       
+                   case SPACE:
+                       
+                       break;
                     }  
                 nave.setRotate(angle);
                 
