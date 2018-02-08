@@ -14,6 +14,7 @@ import javafx.scene.shape.Polygon;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -26,16 +27,22 @@ import javafx.stage.Stage;
 public class Asteroides extends Application {
 double velocidadx;
 double velocidady;
+double velocidadmix=3;
+double velocidadmiy=3;
 double angle;
 double velocidadab =3;
+double velocidadabmi =6;
 double x = 400;
 double y = 350;
+double mix;
+double miy;
 double angulo;
 //int cose = x /angle;
 double velocidadmisil;
 double direccionx;
 double direcciony;
 int propul;
+Circle misil = new Circle();
 final int SCENE_TAM_X= 800;
 final int SCENE_TAM_Y= 600; 
 int rotacion=90; //usaremos esta variable para asignar el giro
@@ -57,10 +64,15 @@ int rotacion=90; //usaremos esta variable para asignar el giro
             20.0, 20.0 });
         nave.setFill(Color.YELLOW);
         nave.getTransforms().add(new Rotate(rotacion,0,00));
-        ArrayList misil = new ArrayList();
+       
         
         nave.setLayoutX(x);
         nave.setLayoutY(y);
+        
+        misil.setRadius(2.0f);
+        misil.setFill(Color.WHITE);
+        
+        misil.getTransforms().add(new Rotate(rotacion,0,00));
        /* nave.getTransforms().add(new Rotate(30, 50, 30));*/
         primaryStage.setTitle("Nave Espacial");
         primaryStage.setScene(scene);
@@ -75,16 +87,20 @@ int rotacion=90; //usaremos esta variable para asignar el giro
             public void handle(long now) {
           
            x += velocidadx;
-           
            nave.setLayoutX(x);
-           
+
            y +=velocidady;
            nave.setLayoutY(y);
           
+           mix+=velocidadmix;
+           misil.setLayoutX(mix);
+           miy+=velocidadmiy;
+           misil.setLayoutY(miy);
            
            angulo = Math.toRadians(angle) ;
            velocidadx=Math.cos(angulo) * velocidadab;
            velocidady=Math.sin(angulo) * velocidadab;
+           
             
            //traspaso de la nave por los bordes
            if (x<0){
@@ -112,6 +128,7 @@ int rotacion=90; //usaremos esta variable para asignar el giro
                         angle = 0;
                         velocidadab -= 2; 
                         nave.setLayoutX(x);
+                        misil.setLayoutX(mix);
                         }
                        break;
                    case LEFT:
@@ -120,7 +137,8 @@ int rotacion=90; //usaremos esta variable para asignar el giro
                        if (angle == -90){
                            angle = 270;
                         velocidadab -= 2;   
-                        nave.setLayoutX(x); 
+                        nave.setLayoutX(x);
+                        misil.setLayoutX(mix);
                         }
                        break;
                                          
@@ -138,7 +156,7 @@ int rotacion=90; //usaremos esta variable para asignar el giro
                     
                            
                            
-                           velocidadab +=3;
+                         velocidadab +=3;
                         
                    
                         
@@ -149,7 +167,19 @@ int rotacion=90; //usaremos esta variable para asignar el giro
                        break;
                        
                    case SPACE:
-                       
+                        misil = new Circle();
+                        misil.setRadius(2.0f);
+                        misil.setFill(Color.WHITE);
+                        velocidadmix=Math.cos(angulo) * velocidadabmi;
+                        velocidadmiy=Math.sin(angulo) * velocidadabmi;
+                        mix=x;
+                        miy=y;
+                        misil.getTransforms().add(new Rotate(rotacion,0,00));
+                        misil.setLayoutX(mix);
+                        misil.setLayoutY(miy);
+                        root.getChildren().add(misil);
+                        
+                        
                        break;
                     }  
                 nave.setRotate(angle);
