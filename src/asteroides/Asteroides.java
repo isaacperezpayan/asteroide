@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
@@ -31,17 +32,20 @@ double velocidadmix=3;
 double velocidadmiy=3;
 double angle;
 double velocidadab =3;
-double velocidadabmi =6;
+double velocidadabmi =10;
 double x = 400;
 double y = 350;
 double mix;
 double miy;
 double angulo;
-//int cose = x /angle;
+double ax =100;
+double ay=100;
+double radio= 50;
 double velocidadmisil;
 double direccionx;
 double direcciony;
 int propul;
+Circle asteroide = new Circle();
 Circle misil = new Circle();
 final int SCENE_TAM_X= 800;
 final int SCENE_TAM_Y= 600; 
@@ -53,6 +57,8 @@ int rotacion=90; //usaremos esta variable para asignar el giro
         Pane root= new Pane();
         Scene scene = new Scene (root, SCENE_TAM_X, SCENE_TAM_Y);
         scene.setFill(Color.BLUE);
+        scene.getStylesheets().add("resources/css/estilos.css");
+        scene.getStylesheets().add(getClass().getResource("resources/css/estilos.css").toExternalForm());
         VBox vbox = new VBox();
         vbox.setLayoutX(800);
         vbox.setLayoutY(600);
@@ -64,14 +70,14 @@ int rotacion=90; //usaremos esta variable para asignar el giro
             20.0, 20.0 });
         nave.setFill(Color.YELLOW);
         nave.getTransforms().add(new Rotate(rotacion,0,00));
-       
-        
         nave.setLayoutX(x);
         nave.setLayoutY(y);
-        
-        misil.setRadius(2.0f);
+        asteroide.setCenterX(ax);
+        asteroide.setCenterY(ay);
+        asteroide.setRadius(radio);
+        asteroide.setFill(Color.BROWN);
+        root.getChildren().add(asteroide); 
         misil.setFill(Color.WHITE);
-        
         misil.getTransforms().add(new Rotate(rotacion,0,00));
        /* nave.getTransforms().add(new Rotate(30, 50, 30));*/
         primaryStage.setTitle("Nave Espacial");
@@ -85,7 +91,14 @@ int rotacion=90; //usaremos esta variable para asignar el giro
             
            @Override
             public void handle(long now) {
-          
+            
+            
+            
+            if (mix == radio){
+                asteroide.setVisible(false);
+            }
+            
+                
            x += velocidadx;
            nave.setLayoutX(x);
 
@@ -101,6 +114,14 @@ int rotacion=90; //usaremos esta variable para asignar el giro
            velocidadx=Math.cos(angulo) * velocidadab;
            velocidady=Math.sin(angulo) * velocidadab;
            
+           if (Colision(misil,asteroide)){
+                asteroide.setVisible(false);
+            }  
+           
+           
+           if (Colisionnave(nave,asteroide)){
+               nave.setVisible(false);
+           }
             
            //traspaso de la nave por los bordes
            if (x<0){
@@ -167,7 +188,7 @@ int rotacion=90; //usaremos esta variable para asignar el giro
                        break;
                        
                    case SPACE:
-                        misil = new Circle();
+                        
                         misil.setRadius(2.0f);
                         misil.setFill(Color.WHITE);
                         velocidadmix=Math.cos(angulo) * velocidadabmi;
@@ -177,13 +198,13 @@ int rotacion=90; //usaremos esta variable para asignar el giro
                         misil.getTransforms().add(new Rotate(rotacion,0,00));
                         misil.setLayoutX(mix);
                         misil.setLayoutY(miy);
-                        root.getChildren().add(misil);
+                        
                         
                         
                        break;
                     }  
                 nave.setRotate(angle);
-                
+                root.getChildren().add(misil);
             });
             scene.setOnKeyReleased((KeyEvent event) -> {
                   
@@ -193,9 +214,21 @@ int rotacion=90; //usaremos esta variable para asignar el giro
       movimiento.start();
     }
         
-
+     private boolean Colision(Circle misil, Circle asteroide){
+        if (Shape.intersect(misil, asteroide).getBoundsInLocal().isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
+    }
       
-        
+     private boolean Colisionnave(Polygon nave, Circle asteroide){
+        if (Shape.intersect(nave, asteroide).getBoundsInLocal().isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
+    }   
         
         
         
