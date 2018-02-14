@@ -26,30 +26,21 @@ import javafx.stage.Stage;
  * @author isaac
  */
 public class Asteroides extends Application {
-double velocidadx;
-double velocidady;
-double velocidadmix=3;
-double velocidadmiy=3;
-double angle;
-double velocidadab =3;
-double velocidadabmi =10;
-double x = 400;
-double y = 350;
-double mix;
-double miy;
+
+
+
 double angulo;
 double ax =100;
 double ay=100;
 double radio= 50;
 double velocidadmisil;
-double direccionx;
-double direcciony;
-int propul;
+
+Nave nave = new Nave();
 Circle asteroide = new Circle();
 Circle misil = new Circle();
 final int SCENE_TAM_X= 800;
 final int SCENE_TAM_Y= 600; 
-int rotacion=90; //usaremos esta variable para asignar el giro
+ //usaremos esta variable para asignar el giro
 
 
     @Override
@@ -63,22 +54,13 @@ int rotacion=90; //usaremos esta variable para asignar el giro
         vbox.setLayoutX(800);
         vbox.setLayoutY(600);
         AnimationTimer movimiento;
-        Polygon nave = new Polygon();
-        nave.getPoints().addAll(new Double[]{
-            0.0, -40.0,
-            -20.0, 20.0,
-            20.0, 20.0 });
-        nave.setFill(Color.YELLOW);
-        nave.getTransforms().add(new Rotate(rotacion,0,00));
-        nave.setLayoutX(x);
-        nave.setLayoutY(y);
+        
         asteroide.setCenterX(ax);
         asteroide.setCenterY(ay);
         asteroide.setRadius(radio);
         asteroide.setFill(Color.BROWN);
         root.getChildren().add(asteroide); 
-        misil.setFill(Color.WHITE);
-        misil.getTransforms().add(new Rotate(rotacion,0,00));
+       
        /* nave.getTransforms().add(new Rotate(30, 50, 30));*/
         primaryStage.setTitle("Nave Espacial");
         primaryStage.setScene(scene);
@@ -98,22 +80,7 @@ int rotacion=90; //usaremos esta variable para asignar el giro
                 asteroide.setVisible(false);
             }
             
-                
-           x += velocidadx;
-           nave.setLayoutX(x);
-
-           y +=velocidady;
-           nave.setLayoutY(y);
-          
-           mix+=velocidadmix;
-           misil.setLayoutX(mix);
-           miy+=velocidadmiy;
-           misil.setLayoutY(miy);
-           
-           angulo = Math.toRadians(angle) ;
-           velocidadx=Math.cos(angulo) * velocidadab;
-           velocidady=Math.sin(angulo) * velocidadab;
-           
+        
            if (Colision(misil,asteroide)){
                 asteroide.setVisible(false);
             }  
@@ -189,15 +156,9 @@ int rotacion=90; //usaremos esta variable para asignar el giro
                        
                    case SPACE:
                         
-                        misil.setRadius(2.0f);
-                        misil.setFill(Color.WHITE);
-                        velocidadmix=Math.cos(angulo) * velocidadabmi;
-                        velocidadmiy=Math.sin(angulo) * velocidadabmi;
-                        mix=x;
-                        miy=y;
-                        misil.getTransforms().add(new Rotate(rotacion,0,00));
-                        misil.setLayoutX(mix);
-                        misil.setLayoutY(miy);
+                        // Crear el misial indicando su posición (la de la nave)
+                        
+                        
                         
                         
                         
