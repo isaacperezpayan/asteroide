@@ -32,10 +32,10 @@ public class Asteroides extends Application {
 double angulo;
 double ax =100;
 double ay=100;
-double radio= 50;
+
 double velocidadmisil;
 
-Nave nave = new Nave();
+//Polygon poligonoNave = new Polygon();
 Circle asteroide = new Circle();
 Circle misil = new Circle();
 final int SCENE_TAM_X= 800;
@@ -55,33 +55,46 @@ final int SCENE_TAM_Y= 600;
         vbox.setLayoutY(600);
         AnimationTimer movimiento;
         
-        asteroide.setCenterX(ax);
-        asteroide.setCenterY(ay);
-        asteroide.setRadius(radio);
-        asteroide.setFill(Color.BROWN);
-        root.getChildren().add(asteroide); 
+        
+     
        
        /* nave.getTransforms().add(new Rotate(30, 50, 30));*/
         primaryStage.setTitle("Nave Espacial");
         primaryStage.setScene(scene);
         primaryStage.show();
-        /*root.getChildren().add(misil);*/
-        root.getChildren().add(nave);
+        
+        Nave nave = new Nave();
+        root.getChildren().add(nave.getPoligonoNave());
         
         //AnimationTimer movimiento;
         movimiento = new AnimationTimer(){ 
             
            @Override
             public void handle(long now) {
+            /*nave.giroDerecha();
+            nave.giroIzquierda();*/
+            scene.setOnKeyPressed((KeyEvent event) -> {
+                 switch(event.getCode()){
+                   case RIGHT:
+                       System.out.println("teclev dere");
+                       //Pulsada tecla DERECHA
+                       nave.giroDerecha();
+                       break;
+                       
+                   case LEFT:
+                       nave.giroIzquierda();
+                       break;
+                      
+                 }
+            });
             
             
-            
-            if (mix == radio){
-                asteroide.setVisible(false);
             }
-            
-        
-           if (Colision(misil,asteroide)){
+        };
+                
+ }
+}
+          /* if (Colision(misil,asteroide)){
                 asteroide.setVisible(false);
             }  
            
@@ -103,29 +116,20 @@ final int SCENE_TAM_Y= 600;
            if (y>SCENE_TAM_Y){
              y = 0;  
            }    
-          }
-        };
-        scene.setOnKeyPressed((KeyEvent event) -> {
+          }*/
+       
+        
+                
+       /* scene.setOnKeyPressed((KeyEvent event) -> {
                //nave.getTransforms().add(new Rotate(rotacion,0,00)); 
                 
                    switch(event.getCode()){
                    case RIGHT:
                        //Pulsada tecla DERECHA
-                       angle = angle+10;
-                       if (angle>=360) {
-                        angle = 0;
-                        velocidadab -= 2; 
-                        nave.setLayoutX(x);
-                        misil.setLayoutX(mix);
-                        }
-                       break;
+                       
                    case LEFT:
                        //Pulsada tecla IZQUIERDA
-                       angle = angle-10;
-                       if (angle == -90){
-                           angle = 270;
-                        velocidadab -= 2;   
-                        nave.setLayoutX(x);
+                       
                         misil.setLayoutX(mix);
                         }
                        break;
@@ -144,7 +148,7 @@ final int SCENE_TAM_Y= 600;
                     
                            
                            
-                         velocidadab +=3;
+                       /*  velocidadab +=3;
                         
                    
                         
@@ -164,7 +168,7 @@ final int SCENE_TAM_Y= 600;
                         
                        break;
                     }  
-                nave.setRotate(angle);
+               /* nave.setRotate(angle);
                 root.getChildren().add(misil);
             });
             scene.setOnKeyReleased((KeyEvent event) -> {
@@ -191,16 +195,16 @@ final int SCENE_TAM_Y= 600;
         }
     }   
         
-        
+        */
         
     
 
     /**
      * @param args the command line arguments
-     */
+     *//*
     public static void main(String[] args) {
         launch(args);
     
     
     }
-}
+}*/

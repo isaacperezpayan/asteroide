@@ -5,16 +5,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.transform.Rotate;
 
-
 public class Misil {
+    Nave nave = new Nave();
     private double velocidadabmi =10;
-    private double mix;
-    private double miy;
+    public double mix;
+    public double miy;
     private double angulo;
     private double rotacion=90;
-    private Circle misil;
+    private Circle formaMisil;
     private double velocidadmix;
     private double velocidadmiy;
+    double radio= 50;
     
     // Indicar por parámetro dónde se debe crear el misil
     public Misil() {
@@ -27,22 +28,29 @@ public class Misil {
     
     public void posicionMisilX() {
         mix+=velocidadmix;
-        misil.setLayoutX(mix);
+        formaMisil.setLayoutX(mix);
         velocidadmix=Math.cos(angulo) * velocidadabmi;
     }
     
     public void posicionMisilY() {
         miy += velocidadmiy;
-        misil.setLayoutY(miy);
+        formaMisil.setLayoutY(miy);
         velocidadmiy = Math.sin(angulo) * velocidadabmi;
     }
     
     public void disparo(){
+        
         velocidadmiy=Math.sin(angulo) * velocidadabmi;
-        mix= x;
-        miy= y;
-        misil.getTransforms().add(new Rotate(rotacion,0,00));
-        misil.setLayoutX(mix);
-        misil.setLayoutY(miy);
+        mix += nave.x;
+        miy += nave.y;
+        formaMisil.getTransforms().add(new Rotate(rotacion,0,00));
+        formaMisil.setLayoutX(mix);
+        formaMisil.setLayoutY(miy);
     } 
+    
+    public void disparoAsteroide(){
+        if (mix == radio){
+            /*asteroide.setVisible(false);*/
+        }
+    }
 }

@@ -7,11 +7,13 @@ import javafx.scene.transform.Rotate;
 
 
 public class Nave {
+    public double mix;
+    public double miy;
     private double velocidadx;
     private double velocidady;
     private double angle;
-    private double x = 400;
-    private double y = 350;
+    public double x = 400;
+    public double y = 350;
     private double direccionx;
     private double direcciony;
     private int propul;
@@ -20,16 +22,20 @@ public class Nave {
     private Polygon poligonoNave;
     private double angulo;
     
-    public void nave(){
-            Polygon poligonoNave = new Polygon();
-            poligonoNave.getPoints().addAll(new Double[]{
-                0.0, -40.0,
-                -20.0, 20.0,
-                20.0, 20.0 });
-            poligonoNave.setFill(Color.YELLOW);
-            poligonoNave.getTransforms().add(new Rotate(rotacion,0,00));
-            poligonoNave.setLayoutX(x);
-            poligonoNave.setLayoutY(y);
+    public Nave(){
+        poligonoNave = new Polygon();
+        poligonoNave.getPoints().addAll(new Double[]{
+            0.0, -40.0,
+            -20.0, 20.0,
+            20.0, 20.0 });
+        poligonoNave.setFill(Color.YELLOW);
+        poligonoNave.getTransforms().add(new Rotate(rotacion,0,00));
+        poligonoNave.setLayoutX(x);
+        poligonoNave.setLayoutY(y);            
+    }
+    
+    public Polygon getPoligonoNave() {
+        return poligonoNave;
     }
     
     public double posicionNaveX(){
@@ -49,6 +55,25 @@ public class Nave {
     }
     
     public void giroDerecha(){
-        
+        System.out.println("dere");
+        angle += 10;
+        if (angle>=360) {
+            angle = 0;
+            velocidadab -= 2; 
+            poligonoNave.setLayoutX(x);
+        }
+        poligonoNave.setRotate(angle);
     }
+        
+    public void giroIzquierda(){
+        angle -= 10;
+        if (angle == -90){
+        angle = 270;
+        velocidadab -= 2;   
+        poligonoNave.setLayoutX(x);
+        }
+        poligonoNave.setRotate(angle);
+    }
+        
 }
+
