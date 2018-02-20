@@ -18,7 +18,7 @@ public class Nave {
     private double direcciony;
     private int propul;
     private int rotacion=90;
-    private double velocidadab =3;
+    private double velocidadab =6;
     private Polygon poligonoNave;
     private double angulo;
     
@@ -57,21 +57,13 @@ public class Nave {
     public void giroDerecha(){
         System.out.println("dere");
         angle += 10;
-        if (angle>=360) {
-            angle = 0;
-            velocidadab -= 2; 
-            poligonoNave.setLayoutX(x);
-        }
+        
         poligonoNave.setRotate(angle);
     }
         
     public void giroIzquierda(){
         angle -= 10;
-        if (angle == -90){
-        angle = 270;
-        velocidadab -= 2;   
-        poligonoNave.setLayoutX(x);
-        }
+        
         poligonoNave.setRotate(angle);
     }
         

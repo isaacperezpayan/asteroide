@@ -12,7 +12,7 @@ double ax;
 double ay;
 
     public asteroide(){
-        Circle asteroide = new Circle();
+        asteroide = new Circle();
         asteroide.setCenterX(ax);
         asteroide.setCenterY(ay);
         asteroide.setRadius(radio);

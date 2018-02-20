@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
@@ -37,7 +38,7 @@ double velocidadmisil;
 
 //Polygon poligonoNave = new Polygon();
 Circle asteroide = new Circle();
-Circle misil = new Circle();
+/*Circle misil = new Circle();*/
 final int SCENE_TAM_X= 800;
 final int SCENE_TAM_Y= 600; 
  //usaremos esta variable para asignar el giro
@@ -66,6 +67,8 @@ final int SCENE_TAM_Y= 600;
         Nave nave = new Nave();
         root.getChildren().add(nave.getPoligonoNave());
         
+       
+        
         //AnimationTimer movimiento;
         movimiento = new AnimationTimer(){ 
             
@@ -73,25 +76,40 @@ final int SCENE_TAM_Y= 600;
             public void handle(long now) {
             /*nave.giroDerecha();
             nave.giroIzquierda();*/
-            scene.setOnKeyPressed((KeyEvent event) -> {
-                 switch(event.getCode()){
-                   case RIGHT:
-                       System.out.println("teclev dere");
-                       //Pulsada tecla DERECHA
-                       nave.giroDerecha();
-                       break;
-                       
-                   case LEFT:
-                       nave.giroIzquierda();
-                       break;
-                      
-                 }
-            });
+            nave.posicionNaveX();
+            nave.posicionNaveY();
+            nave.giroDerecha();
             
             
             }
         };
-                
+               scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch(event.getCode()){
+                    case RIGHT:
+                        nave.giroDerecha();
+                        break;
+                        
+                    case LEFT:
+                        nave.giroIzquierda();
+                        break;
+                        
+                    case UP:
+                        nave.posicionNaveX();
+                        nave.posicionNaveY();
+                        break;
+                        
+                    case SPACE:
+                        Misil misil = new Misil();
+                        
+                        misil.posicionMisilX();
+                        misil.posicionMisilY();
+                        misil.disparo();
+                        root.getChildren().add(misil.getFormaMisil());
+                }
+            }
+        }); 
  }
 }
           /* if (Colision(misil,asteroide)){

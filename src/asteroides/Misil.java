@@ -19,15 +19,15 @@ public class Misil {
     
     // Indicar por parámetro dónde se debe crear el misil
     public Misil() {
-        Circle misil = new Circle();
-        misil.setFill(Color.WHITE);
-        misil.setRadius(2.0f);
-        misil.setFill(Color.WHITE);
-        misil.getTransforms().add(new Rotate(rotacion,0,00));
+        formaMisil = new Circle();
+        formaMisil.setFill(Color.WHITE);
+        formaMisil.setRadius(2.0f);
+        formaMisil.setFill(Color.WHITE);
+        formaMisil.getTransforms().add(new Rotate(rotacion,0,00));
     }
     
     public void posicionMisilX() {
-        mix+=velocidadmix;
+        mix +=velocidadmix;
         formaMisil.setLayoutX(mix);
         velocidadmix=Math.cos(angulo) * velocidadabmi;
     }
@@ -38,11 +38,14 @@ public class Misil {
         velocidadmiy = Math.sin(angulo) * velocidadabmi;
     }
     
+    public Circle getFormaMisil(){
+        return formaMisil;
+    }
+    
     public void disparo(){
+        velocidadmix=Math.cos(angulo) * velocidadabmi;
         
-        velocidadmiy=Math.sin(angulo) * velocidadabmi;
-        mix += nave.x;
-        miy += nave.y;
+        
         formaMisil.getTransforms().add(new Rotate(rotacion,0,00));
         formaMisil.setLayoutX(mix);
         formaMisil.setLayoutY(miy);
