@@ -18,9 +18,10 @@ public class Nave {
     private double direcciony;
     private int propul;
     private int rotacion=90;
-    private double velocidadab =6;
-    private Polygon poligonoNave;
+    public double velocidadab ;
+    public Polygon poligonoNave;
     private double angulo;
+   
     
     public Nave(){
         poligonoNave = new Polygon();
@@ -54,8 +55,41 @@ public class Nave {
         return y;
     }
     
+    public void movimiento(){
+        x += velocidadx;
+        poligonoNave.setLayoutX(x);
+        y +=velocidady;
+        poligonoNave.setLayoutY(y);
+        angulo = Math.toRadians(angle) ;
+        velocidadx=Math.cos(angulo) * velocidadab;
+        velocidady=Math.sin(angulo) * velocidadab;
+    }   
+    
+    public void naveAcelerar(){
+        velocidadab +=3;
+    }
+    
+    public void naveFrenar(){
+        velocidadab -=1;
+    }
+    
+    public void naveBordes(){
+        if (x<0){
+               x = Asteroides.SCENE_TAM_X;  
+             }
+            if (x>Asteroides.SCENE_TAM_X){
+              x = 0;  
+            }
+            if (y<0){
+              y = Asteroides.SCENE_TAM_Y;  
+            }
+            if (y>Asteroides.SCENE_TAM_Y){
+              y = 0;  
+            }
+    }
+    
     public void giroDerecha(){
-        System.out.println("dere");
+        
         angle += 10;
         
         poligonoNave.setRotate(angle);

@@ -8,14 +8,15 @@ import javafx.scene.transform.Rotate;
 public class Misil {
     Nave nave = new Nave();
     private double velocidadabmi =10;
-    public double mix;
-    public double miy;
+    public double mix = nave.x;
+    public double miy = nave.y;
     private double angulo;
     private double rotacion=90;
-    private Circle formaMisil;
+    public Circle formaMisil;
     private double velocidadmix;
     private double velocidadmiy;
     double radio= 50;
+    double angle;
     
     // Indicar por parámetro dónde se debe crear el misil
     public Misil() {
@@ -24,31 +25,41 @@ public class Misil {
         formaMisil.setRadius(2.0f);
         formaMisil.setFill(Color.WHITE);
         formaMisil.getTransforms().add(new Rotate(rotacion,0,00));
-    }
-    
-    public void posicionMisilX() {
-        mix +=velocidadmix;
-        formaMisil.setLayoutX(mix);
-        velocidadmix=Math.cos(angulo) * velocidadabmi;
-    }
-    
-    public void posicionMisilY() {
-        miy += velocidadmiy;
-        formaMisil.setLayoutY(miy);
-        velocidadmiy = Math.sin(angulo) * velocidadabmi;
+        formaMisil.setCenterX(mix);
+        formaMisil.setCenterY(miy);
     }
     
     public Circle getFormaMisil(){
         return formaMisil;
     }
     
-    public void disparo(){
-        velocidadmix=Math.cos(angulo) * velocidadabmi;
-        
-        
-        formaMisil.getTransforms().add(new Rotate(rotacion,0,00));
+    public double posicionMisilX() {
+        mix += velocidadmix;
         formaMisil.setLayoutX(mix);
+        angulo = Math.toRadians(angle) ;
+        velocidadmix= Math.cos(angulo) * velocidadabmi;
+        return mix;
+    }
+    
+    public double posicionMisilY() {
+        miy +=velocidadmiy;
         formaMisil.setLayoutY(miy);
+        angulo = Math.toRadians(angle) ;
+        velocidadmiy = Math.sin(angulo) * velocidadabmi;
+        return miy;
+    }
+    
+
+    
+    public void disparo(){
+        mix += velocidadmix;
+        formaMisil.setLayoutX(mix);
+        miy +=velocidadmiy;
+        formaMisil.setLayoutY(miy);
+        angulo = Math.toRadians(angle) ;
+        velocidadmix=Math.cos(angulo) * velocidadabmi;
+        velocidadmiy=Math.sin(angulo) * velocidadabmi;
+        
     } 
     
     public void disparoAsteroide(){

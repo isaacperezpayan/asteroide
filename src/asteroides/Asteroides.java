@@ -39,8 +39,8 @@ double velocidadmisil;
 //Polygon poligonoNave = new Polygon();
 Circle asteroide = new Circle();
 /*Circle misil = new Circle();*/
-final int SCENE_TAM_X= 800;
-final int SCENE_TAM_Y= 600; 
+public static final int SCENE_TAM_X= 800;
+public static final int SCENE_TAM_Y= 600; 
  //usaremos esta variable para asignar el giro
 
 
@@ -67,18 +67,17 @@ final int SCENE_TAM_Y= 600;
         Nave nave = new Nave();
         root.getChildren().add(nave.getPoligonoNave());
         
-       
+        
         
         //AnimationTimer movimiento;
         movimiento = new AnimationTimer(){ 
             
            @Override
             public void handle(long now) {
-            /*nave.giroDerecha();
-            nave.giroIzquierda();*/
-            nave.posicionNaveX();
-            nave.posicionNaveY();
-            nave.giroDerecha();
+            nave.movimiento();
+            nave.naveBordes();
+            
+            
             
             
             }
@@ -96,20 +95,24 @@ final int SCENE_TAM_Y= 600;
                         break;
                         
                     case UP:
+                        nave.naveAcelerar();
                         nave.posicionNaveX();
                         nave.posicionNaveY();
                         break;
                         
                     case SPACE:
                         Misil misil = new Misil();
-                        
-                        misil.posicionMisilX();
-                        misil.posicionMisilY();
-                        misil.disparo();
                         root.getChildren().add(misil.getFormaMisil());
+                        
+                        misil.disparo();
+                        
+                        
+                    case DOWN:
+                        nave.naveFrenar();
                 }
             }
         }); 
+             movimiento.start();
  }
 }
           /* if (Colision(misil,asteroide)){
