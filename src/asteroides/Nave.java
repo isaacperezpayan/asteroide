@@ -39,21 +39,14 @@ public class Nave {
         return poligonoNave;
     }
     
-    public double posicionNaveX(){
-        x += velocidadx;
-        poligonoNave.setLayoutX(x);
-        angulo = Math.toRadians(angle) ;
-        velocidadx= Math.cos(angulo) * velocidadab;
-        return x;
+    public double getPoligonoX(){
+        return poligonoNave.getLayoutX();
     }
     
-    public double posicionNaveY(){
-        y +=velocidady;
-        poligonoNave.setLayoutY(y);
-        angulo = Math.toRadians(angle) ;
-        velocidady = Math.sin(angulo) * velocidadab;
-        return y;
+    public double getPoligonoY(){
+        return poligonoNave.getLayoutY();
     }
+    
     
     public void movimiento(){
         x += velocidadx;

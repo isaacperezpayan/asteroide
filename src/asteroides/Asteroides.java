@@ -20,6 +20,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+import java.util.ArrayList;
 
 
 /**
@@ -29,10 +30,11 @@ import javafx.stage.Stage;
 public class Asteroides extends Application {
 
 
-
+Misil misil;
 double angulo;
 double ax =100;
 double ay=100;
+public static Nave nave = new Nave();
 
 double velocidadmisil;
 
@@ -55,7 +57,7 @@ public static final int SCENE_TAM_Y= 600;
         vbox.setLayoutX(800);
         vbox.setLayoutY(600);
         AnimationTimer movimiento;
-        
+        ArrayList <Misil> misiles = new ArrayList();
         
      
        
@@ -64,11 +66,12 @@ public static final int SCENE_TAM_Y= 600;
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        Nave nave = new Nave();
         root.getChildren().add(nave.getPoligonoNave());
         
         
         
+        
+       
         //AnimationTimer movimiento;
         movimiento = new AnimationTimer(){ 
             
@@ -76,7 +79,7 @@ public static final int SCENE_TAM_Y= 600;
             public void handle(long now) {
             nave.movimiento();
             nave.naveBordes();
-            
+            misil.moverMisil();
             
             
             
@@ -96,19 +99,20 @@ public static final int SCENE_TAM_Y= 600;
                         
                     case UP:
                         nave.naveAcelerar();
-                        nave.posicionNaveX();
-                        nave.posicionNaveY();
                         break;
                         
                     case SPACE:
-                        Misil misil = new Misil();
-                        root.getChildren().add(misil.getFormaMisil());
                         
+                        misiles.add(misil);
+                        misil = new Misil(nave.x, nave.y);
                         misil.disparo();
+                        root.getChildren().add(misil.getFormaMisil());
+                        break;
                         
                         
                     case DOWN:
                         nave.naveFrenar();
+                        break;
                 }
             }
         }); 
