@@ -37,7 +37,7 @@ double ay=100;
 public static Nave nave = new Nave();
 
 double velocidadmisil;
-
+ArrayList <Misil> misiles = new ArrayList();
 //Polygon poligonoNave = new Polygon();
 Circle asteroide = new Circle();
 /*Circle misil = new Circle();*/
@@ -57,7 +57,7 @@ public static final int SCENE_TAM_Y= 600;
         vbox.setLayoutX(800);
         vbox.setLayoutY(600);
         AnimationTimer movimiento;
-        ArrayList <Misil> misiles = new ArrayList();
+        
         
      
        
@@ -79,7 +79,12 @@ public static final int SCENE_TAM_Y= 600;
             public void handle(long now) {
             nave.movimiento();
             nave.naveBordes();
-            misil.moverMisil();
+             //bucle para mover cada misil añadiendo en lista y recorriendola.
+           for(int m=0; m<misiles.size();m++){
+                Misil misil = misiles.get(m);
+                misil.moverMisil();
+            }
+            
             
             
             
@@ -102,11 +107,17 @@ public static final int SCENE_TAM_Y= 600;
                         break;
                         
                     case SPACE:
-                        
+                        misil = new Misil(nave.getPoligonoX(), nave.getPoligonoY(), nave.angle);
                         misiles.add(misil);
-                        misil = new Misil(nave.x, nave.y);
                         misil.disparo();
+//                        System.out.println(misil.getFormaMisil().getCenterX());
+//                        System.out.println(misil.getFormaMisil().getCenterY());
+//                        System.out.println(misil.mix);
+//                        System.out.println(misil.miy);
+//                        System.out.println(nave.x);
+//                        System.out.println(nave.y);       
                         root.getChildren().add(misil.getFormaMisil());
+                        System.out.println("Lo recorre");
                         break;
                         
                         

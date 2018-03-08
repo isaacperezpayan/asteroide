@@ -11,7 +11,7 @@ public class Nave {
     public double miy;
     private double velocidadx;
     private double velocidady;
-    private double angle;
+    public double angle;
     public double x = 400;
     public double y = 350;
     private double direccionx;
@@ -20,7 +20,7 @@ public class Nave {
     private int rotacion=90;
     public double velocidadab ;
     public Polygon poligonoNave;
-    private double angulo;
+    public double angulo;
    
     
     public Nave(){
